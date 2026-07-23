@@ -2,10 +2,160 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的GitHub个人网站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界 Java版 指令大全</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+        body {
+            background-color: #f4f6f8;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 30px;
+        }
+        .category {
+            margin-bottom: 25px;
+        }
+        .category h2 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 18px;
+            border-left: 4px solid #2e7d32;
+            padding-left: 10px;
+        }
+        .cmd-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px #ddd;
+        }
+        .cmd-text {
+            flex: 1;
+            font-family: Consolas, monospace;
+            color: #111;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        .copy-btn:active {
+            background: #1b5e20;
+        }
+        .tip {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2e7d32;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .tip.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <h1>🎉 网站部署成功啦！</h1>
-    <p>这是免费搭建在 GitHub Pages 的站点</p >
+    <h1>我的世界 Java 版常用指令大全</h1>
+
+    <div class="tip" id="toast">复制成功！</div>
+
+    <!-- 传送类 -->
+    <div class="category">
+        <h2>传送指令</h2>
+        <div class="cmd-item">
+            <span class="cmd-text">/tp 玩家名 X Y Z</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/tp @s 目标玩家</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+    </div>
+
+    <!-- 生存辅助 -->
+    <div class="category">
+        <h2>生存辅助</h2>
+        <div class="cmd-item">
+            <span class="cmd-text">/gamemode survival</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/gamemode creative</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/effect clear @s</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/kill @e[type=item]</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+    </div>
+
+    <!-- 物品给予 -->
+    <div class="category">
+        <h2>给予物品</h2>
+        <div class="cmd-item">
+            <span class="cmd-text">/give @s diamond_sword</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/give @s minecraft:command_block</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+    </div>
+
+    <!-- 天气时间 -->
+    <div class="category">
+        <h2>时间与天气</h2>
+        <div class="cmd-item">
+            <span class="cmd-text">/time set day</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/time set night</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+        <div class="cmd-item">
+            <span class="cmd-text">/weather clear</span>
+            <button class="copy-btn" onclick="copyText(this)">复制</button>
+        </div>
+    </div>
+
+    <script>
+        const toast = document.getElementById('toast');
+        function copyText(btn) {
+            const text = btn.parentElement.querySelector('.cmd-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 1200);
+            });
+        }
+    </script>
 </body>
 </html>
