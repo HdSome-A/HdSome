@@ -3,220 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网途笔记 | 网络技术个人博客</title>
+    <title>网页在线URL播放器</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft Yahei", sans-serif;
+            font-family: system-ui, sans-serif;
         }
         body {
-            background-color: #f4f7fa;
-            color: #333;
-            line-height: 1.7;
-        }
-        /* 头部导航 */
-        header {
-            background: #165DFF;
+            background-color: #121212;
             color: #fff;
-            padding: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .container {
-            width: 92%;
-            max-width: 1200px;
+            padding: 30px 15px;
+            max-width: 1000px;
             margin: 0 auto;
         }
-        .header-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        nav a:hover {
-            color: #cfe0ff;
-        }
-        /* 主体布局 */
-        .main-wrap {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 30px;
-            margin: 40px auto;
-        }
-        /* 文章卡片 */
-        .article-card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-        }
-        .article-card h2 {
-            color: #165DFF;
-            margin-bottom: 10px;
-        }
-        .meta {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-        .article-card p {
-            color: #555;
-            margin-bottom: 15px;
-        }
-        .read-more {
-            display: inline-block;
-            padding: 7px 16px;
-            background: #165DFF;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .read-more:hover {
-            background: #0e4bd9;
-        }
-        /* 侧边栏 */
-        .sidebar {
-        }
-        .side-box {
-            background: #fff;
-            padding: 22px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-        }
-        .side-box h3 {
-            border-left: 4px solid #165DFF;
-            padding-left: 10px;
-            margin-bottom: 15px;
-        }
-        .side-box ul {
-            list-style: none;
-        }
-        .side-box li {
-            margin: 8px 0;
-        }
-        .side-box a {
-            color: #444;
-            text-decoration: none;
-        }
-        .side-box a:hover {
-            color: #165DFF;
-        }
-        /* 页脚 */
-        footer {
-            background: #0f3ea8;
-            color: #fff;
+        h1 {
             text-align: center;
-            padding: 25px 0;
-            margin-top: 50px;
+            margin-bottom: 30px;
+            color: #ffffff;
         }
-        /* 移动端适配 */
-        @media (max-width:768px) {
-            .main-wrap {
-                grid-template-columns: 1fr;
-            }
-            .header-wrap {
-                flex-direction: column;
-                gap:15px;
-            }
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        #videoUrl {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            background: #1e1e1e;
+            color: #fff;
+            outline: 2px solid transparent;
+        }
+        #videoUrl:focus {
+            outline-color: #2563eb;
+        }
+        #playBtn {
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        #playBtn:hover {
+            background: #1d4ed8;
+        }
+        .player-box {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+        .tip {
+            margin-top: 15px;
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <!-- 导航头部 -->
-    <header>
-        <div class="container header-wrap">
-            <div class="logo">网途笔记</div>
-            <nav>
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">网络基础</a></li>
-                    <li><a href="#">网络安全</a></li>
-                    <li><a href="#">路由交换</a></li>
-                    <li><a href="#">关于我</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <h1>在线URL视频播放器</h1>
 
-    <!-- 主体内容 -->
-    <div class="container main-wrap">
-        <!-- 文章主区域 -->
-        <main>
-            <div class="article-card">
-                <h2>一文搞懂OSI七层网络模型</h2>
-                <div class="meta">发布时间：2026-07-20 | 分类：网络基础</div>
-                <p>OSI七层模型是计算机网络的核心理论框架，从物理层、数据链路层、网络层、传输层、会话层、表示层到应用层，逐层规定了数据传输的封装与解封装规则。TCP/IP协议栈正是基于这套理论简化而来，是学习组网、抓包、排错的必备知识。</p>
-                <a href="#" class="read-more">阅读全文</a>
-            </div>
-
-            <div class="article-card">
-                <h2>家庭宽带网络优化方案，告别卡顿延迟</h2>
-                <div class="meta">发布时间：2026-07-15 | 分类：实用组网</div>
-                <p>很多用户带宽充足，但刷视频、打游戏依然高延迟。本文讲解光猫桥接、路由器信道选择、有线回程组网、DNS优选等实操方案，解决内网拥堵、WIFI穿墙弱、高峰期掉线等常见家庭网络问题。</p>
-                <a href="#" class="read-more">阅读全文</a>
-            </div>
-
-            <div class="article-card">
-                <h2>常见网络攻击原理与基础防御手段</h2>
-                <div class="meta">发布时间：2026-07-08 | 分类：网络安全</div>
-                <p>介绍ARP欺骗、DNS劫持、端口扫描、弱口令爆破四种入门级网络攻击原理，搭配防火墙策略、VLAN隔离、定期改密、关闭无用端口等低成本防御方式，适合新手搭建基础安全防护体系。</p>
-                <a href="#" class="read-more">阅读全文</a>
-            </div>
-        </main>
-
-        <!-- 侧边栏 -->
-        <aside class="sidebar">
-            <div class="side-box">
-                <h3>关于本站</h3>
-                <p>专注分享计算机网络基础知识、路由交换配置、网络安全防护、家用及企业组网教程，从零开始学习网络技术。</p>
-            </div>
-
-            <div class="side-box">
-                <h3>文章分类</h3>
-                <ul>
-                    <li><a href="#">网络基础理论</a></li>
-                    <li><a href="#">TCP/IP与协议分析</a></li>
-                    <li><a href="#">路由交换机配置</a></li>
-                    <li><a href="#">网络安全攻防入门</a></li>
-                    <li><a href="#">家庭&小型企业组网</a></li>
-                </ul>
-            </div>
-
-            <div class="side-box">
-                <h3>热门文章</h3>
-                <ul>
-                    <li><a href="#">IP地址与子网掩码计算详解</a></li>
-                    <li><a href="#">Wireshark抓包新手教程</a></li>
-                    <li><a href="#">DHCP原理与故障排查</a></li>
-                    <li><a href="#">NAT四种类型讲解</a></li>
-                </ul>
-            </div>
-        </aside>
+    <div class="input-area">
+        <input type="text" id="videoUrl" placeholder="粘贴MP4、WebM等直链视频地址">
+        <button id="playBtn">开始播放</button>
     </div>
 
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <p>© 2026 网途笔记 网络技术博客 | 纯静态HTML网站演示</p>
-        </div>
-    </footer>
+    <div class="player-box">
+        <video id="player" controls></video>
+    </div>
+
+    <p class="tip">
+        注意：仅支持**直接视频源链接**（.mp4 /.webm /.ogg），不支持B站、爱奇艺、腾讯视频等加密网页链接，存在跨域限制无法播放。
+    </p>
+
+    <script>
+        const urlInput = document.getElementById('videoUrl');
+        const playBtn = document.getElementById('playBtn');
+        const player = document.getElementById('player');
+
+        playBtn.addEventListener('click', () => {
+            const url = urlInput.value.trim();
+            if (!url) {
+                alert('请输入视频链接');
+                return;
+            }
+            player.src = url;
+            player.load();
+            player.play().catch(err => {
+                console.log('自动播放被浏览器限制，手动点击播放按钮', err);
+            });
+        });
+
+        // 回车快速播放
+        urlInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') playBtn.click();
+        });
+    </script>
 </body>
 </html>
