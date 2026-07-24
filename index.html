@@ -3,112 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网页在线URL播放器</title>
+    <title>高级科学计算器</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, sans-serif;
+            font-family: Consolas, monospace;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        :root {
+            --bg-main: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-color: #f1f5f9;
+            --btn-normal: rgba(71, 85, 105, 0.4);
+            --btn-op: rgba(59, 130, 246, 0.5);
+            --btn-clear: rgba(220, 38, 38, 0.6);
+            --btn-eq: rgba(16, 185, 129, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-mode {
+            --bg-main: #e2e8f0;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --text-color: #0f172a;
+            --btn-normal: rgba(203, 213, 225, 0.7);
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            background-color: #121212;
-            color: #fff;
-            padding: 30px 15px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ffffff;
-        }
-        .input-area {
+            min-height: 100vh;
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-main);
+            padding: 20px;
         }
-        #videoUrl {
-            flex: 1;
-            padding: 12px 16px;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            background: #1e1e1e;
-            color: #fff;
-            outline: 2px solid transparent;
+
+        .container {
+            backdrop-filter: blur(16px);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 26px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         }
-        #videoUrl:focus {
-            outline-color: #2563eb;
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
-        #playBtn {
-            padding: 12px 24px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.2s;
+
+        .title {
+            color: var(--text-color);
+            font-size: 18px;
         }
-        #playBtn:hover {
-            background: #1d4ed8;
-        }
-        .player-box {
-            width: 100%;
-            background: #000;
+
+        #themeBtn {
+            padding: 6px 12px;
             border-radius: 8px;
-            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            background: var(--btn-normal);
+            color: var(--text-color);
         }
-        video {
-            width: 100%;
-            display: block;
-        }
-        .tip {
-            margin-top: 15px;
-            color: #aaa;
+
+        #history {
+            color: var(--text-color);
+            opacity: 0.6;
+            text-align: right;
+            min-height: 22px;
             font-size: 14px;
-            line-height: 1.6;
+            padding-right: 8px;
+        }
+
+        #display {
+            width: 100%;
+            padding: 16px 12px;
+            margin-bottom: 18px;
+            font-size: 30px;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text-color);
+            outline: none;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 14px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-color);
+            background: var(--btn-normal);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .op { background: var(--btn-op); }
+        .ac { background: var(--btn-clear); }
+        .equal {
+            background: var(--btn-eq);
+            grid-column: span 2;
         }
     </style>
 </head>
 <body>
-    <h1>在线URL视频播放器</h1>
+    <div class="container">
+        <div class="header-bar">
+            <div class="title">科学计算器</div>
+            <button id="themeBtn">切换主题</button>
+        </div>
+        <div id="history"></div>
+        <input type="text" id="display" readonly>
+        <div class="grid">
+            <button class="ac" onclick="clearAll()">AC</button>
+            <button onclick="backspace()">⌫</button>
+            <button class="op" onclick="append('/')">÷</button>
+            <button class="op" onclick="append('*')">×</button>
+            <button onclick="calcFunc('sqrt')">√</button>
 
-    <div class="input-area">
-        <input type="text" id="videoUrl" placeholder="粘贴MP4、WebM等直链视频地址">
-        <button id="playBtn">开始播放</button>
+            <button onclick="append('7')">7</button>
+            <button onclick="append('8')">8</button>
+            <button onclick="append('9')">9</button>
+            <button class="op" onclick="append('-')">-</button>
+            <button onclick="calcFunc('pow2')">x²</button>
+
+            <button onclick="append('4')">4</button>
+            <button onclick="append('5')">5</button>
+            <button onclick="append('6')">6</button>
+            <button class="op" onclick="append('+')">+</button>
+            <button onclick="calcFunc('sin')">sin</button>
+
+            <button onclick="append('1')">1</button>
+            <button onclick="append('2')">2</button>
+            <button onclick="append('3')">3</button>
+            <button onclick="calcFunc('cos')">cos</button>
+            <button onclick="calcFunc('tan')">tan</button>
+
+            <button onclick="append('0')">0</button>
+            <button onclick="append('.')">.</button>
+            <button class="equal" onclick="getResult()">=</button>
+        </div>
     </div>
-
-    <div class="player-box">
-        <video id="player" controls></video>
-    </div>
-
-    <p class="tip">
-        注意：仅支持**直接视频源链接**（.mp4 /.webm /.ogg），不支持B站、爱奇艺、腾讯视频等加密网页链接，存在跨域限制无法播放。
-    </p>
 
     <script>
-        const urlInput = document.getElementById('videoUrl');
-        const playBtn = document.getElementById('playBtn');
-        const player = document.getElementById('player');
+        const disp = document.getElementById('display');
+        const historyBox = document.getElementById('history');
+        const themeBtn = document.getElementById('themeBtn');
+        let historyExp = '';
 
-        playBtn.addEventListener('click', () => {
-            const url = urlInput.value.trim();
-            if (!url) {
-                alert('请输入视频链接');
-                return;
+        // 明暗主题切换
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('light-mode');
+        };
+
+        // 追加字符
+        function append(v) {
+            disp.value += v;
+        }
+
+        // 清空
+        function clearAll() {
+            disp.value = '';
+            historyBox.textContent = '';
+            historyExp = '';
+        }
+
+        // 退格
+        function backspace() {
+            disp.value = disp.value.slice(0, -1);
+        }
+
+        // 基础运算结果
+        function getResult() {
+            try {
+                let exp = disp.value.replace(/×/g, '*').replace(/÷/g, '/');
+                historyExp = disp.value;
+                historyBox.textContent = historyExp + " =";
+                let res = eval(exp);
+                disp.value = Number(res.toFixed(8));
+            } catch {
+                disp.value = "错误";
             }
-            player.src = url;
-            player.load();
-            player.play().catch(err => {
-                console.log('自动播放被浏览器限制，手动点击播放按钮', err);
-            });
-        });
+        }
 
-        // 回车快速播放
-        urlInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') playBtn.click();
+        // 科学函数计算
+        function calcFunc(type) {
+            try {
+                let num = parseFloat(disp.value);
+                let result;
+                switch(type) {
+                    case 'sqrt': result = Math.sqrt(num); break;
+                    case 'pow2': result = num ** 2; break;
+                    case 'sin': result = Math.sin(num * Math.PI / 180); break;
+                    case 'cos': result = Math.cos(num * Math.PI / 180); break;
+                    case 'tan': result = Math.tan(num * Math.PI / 180); break;
+                }
+                disp.value = Number(result.toFixed(8));
+            } catch {
+                disp.value = "错误";
+            }
+        }
+
+        // 键盘按键支持
+        document.addEventListener('keydown', e => {
+            const key = e.key;
+            if (!isNaN(key) || '+-*/.'.includes(key)) append(key);
+            if (key === 'Enter') getResult();
+            if (key === 'Escape') clearAll();
+            if (key === 'Backspace') backspace();
         });
     </script>
 </body>
